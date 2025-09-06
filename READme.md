@@ -1,3 +1,7 @@
+
+---
+
+````markdown
 # 🩺 Fine-Tuning BLIP for Medical Visual Question Answering (VQA)
 
 This repository contains a PyTorch-based notebook for fine-tuning the **Salesforce BLIP** (Bootstrapping Language-Image Pre-training) model for the specific task of **Visual Question Answering on medical imagery**. The model is trained on the **PathVQA** dataset, which includes pathology images and associated question-answer pairs.
@@ -35,36 +39,34 @@ Follow these steps to run the project on your own machine or in Google Colab.
 ```bash
 git clone https://github.com/Abel-Marie/BLIP-For-Medical-VQA.git
 cd BLIP-For-Medical-VQA
+````
 
-### 2. Install Dependencies 
+### 2. Install Dependencies
 
+```bash
 pip install transformers[torch] datasets -q gradio
+```
 
+### 3. Run the Notebook
 
-###3. Run the Notebook
+Open `Fine-tuning BLIP for Medical VQA.ipynb` in Jupyter or Google Colab.
 
- * Open fine-tuning BLIP for medical VQA.ipynb in Jupyter or Google Colab.
+Make sure to **enable GPU** for faster training.
 
- * Make sure to enable GPU for faster training.
+Run all the cells in order to:
 
- * Run all cells to:
+* ✅ Load libraries
+* ✅ Configure hyperparameters
+* ✅ Load and preprocess the PathVQA dataset
+* ✅ Fine-tune the BLIP model
+* ✅ Save the trained model
+* ✅ Launch the Gradio demo interface
 
- * Load libraries
+---
 
- * Configure hyperparameters
+## ⚙️ Configuration
 
- * Load and preprocess the PathVQA dataset
-
- * Fine-tune the BLIP model
-
- * Save the trained model
-
- * Launch the Gradio demo
-
-
-⚙️ Configuration
-
-All key settings are centralized in the Config class for easy tuning.
+All key settings are centralized in the `Config` class for easy tuning.
 
 | Parameter                     | Default                     | Description                            |
 | ----------------------------- | --------------------------- | -------------------------------------- |
@@ -79,29 +81,41 @@ All key settings are centralized in the Config class for easy tuning.
 | `LEARNING_RATE`               | `5e-5`                      | Optimizer learning rate                |
 | `MAX_TEXT_LENGTH`             | `32`                        | Max token length for questions/answers |
 
+> 💡 **Note:** The effective batch size = `BATCH_SIZE * GRADIENT_ACCUMULATION_STEPS` (e.g., 2 × 16 = 32). Adjust based on your GPU.
 
-💾 Model Saving & Inference
+---
 
-After training, the model and processor are saved to the OUTPUT_DIR. You can reload them like this:
+## 💾 Model Saving & Inference
 
+After training, the model and processor are saved to the specified `OUTPUT_DIR`. You can reload them later for inference:
 
+```python
 from transformers import BlipProcessor, BlipForQuestionAnswering
 
 output_dir = "blip_vqa_finetuned"
 
 processor = BlipProcessor.from_pretrained(output_dir)
 model = BlipForQuestionAnswering.from_pretrained(output_dir)
+```
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Feel free to open an issue or submit a pull request for:
+
+* 💡 New features
+* 🐞 Bug fixes
+* 📚 Documentation improvements
+
+---
+
+## 🙏 Acknowledgments
+
+* 🧠 **Salesforce** for releasing the [BLIP model](https://github.com/salesforce/BLIP)
+* 📸 **Flavia Giammarino** for curating the [PathVQA dataset](https://huggingface.co/datasets/flaviagiammarino/path-vqa)
+* 🧰 **Hugging Face** and **Gradio** for enabling fast and accessible machine learning development
+
+---
 
 
-🤝 Contributing
-
-Contributions are welcome! Feel free to open an issue or submit a pull request for bug fixes, new features, or improvements.
-
-
-🙏 Acknowledgments
-
-🧠 Salesforce for releasing the BLIP model
-
-📸 Flavia Giammarino for the PathVQA dataset
-
-🧰 Hugging Face and Gradio for enabling accessible ML tooling
