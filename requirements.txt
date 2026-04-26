@@ -1,0 +1,6 @@
+torch>=2.0
+transformers>=4.30
+datasets>=2.14
+accelerate>=0.20
+gradio>=4.0
+Pillow>=10.0
